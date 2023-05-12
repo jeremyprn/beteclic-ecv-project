@@ -35,9 +35,13 @@ class Event
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'events')]
     private Collection $category;
 
+    #[ORM\OneToMany(mappedBy: 'eventId', targetEntity: SelectionEvent::class)]
+    private Collection $selectionEvents;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
+        $this->selectionEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,6 +129,36 @@ class Event
     public function removeCategory(Category $category): self
     {
         $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SelectionEvent>
+     */
+    public function getSelectionEvents(): Collection
+    {
+        return $this->selectionEvents;
+    }
+
+    public function addSelectionEvent(SelectionEvent $selectionEvent): self
+    {
+        if (!$this->selectionEvents->contains($selectionEvent)) {
+            $this->selectionEvents->add($selectionEvent);
+            $selectionEvent->setEventId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSelectionEvent(SelectionEvent $selectionEvent): self
+    {
+        if ($this->selectionEvents->removeElement($selectionEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($selectionEvent->getEventId() === $this) {
+                $selectionEvent->setEventId(null);
+            }
+        }
 
         return $this;
     }
