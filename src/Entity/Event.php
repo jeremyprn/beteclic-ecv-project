@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,14 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $userId = null;
+
+    #[ORM\OneToMany(mappedBy: 'eventId', targetEntity: EventCategory::class, orphanRemoval: true)]
+    private Collection $eventCategories;
+
+    public function __construct()
+    {
+        $this->eventCategories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +101,36 @@ class Event
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EventCategory>
+     */
+    public function getEventCategories(): Collection
+    {
+        return $this->eventCategories;
+    }
+
+    public function addEventCategory(EventCategory $eventCategory): self
+    {
+        if (!$this->eventCategories->contains($eventCategory)) {
+            $this->eventCategories->add($eventCategory);
+            $eventCategory->setEventId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventCategory(EventCategory $eventCategory): self
+    {
+        if ($this->eventCategories->removeElement($eventCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($eventCategory->getEventId() === $this) {
+                $eventCategory->setEventId(null);
+            }
+        }
 
         return $this;
     }
