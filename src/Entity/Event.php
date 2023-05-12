@@ -26,18 +26,18 @@ class Event
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column]
-    private ?bool $isopen = null;
+    private ?bool $isOpen = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $userId = null;
 
-    #[ORM\OneToMany(mappedBy: 'eventId', targetEntity: EventCategory::class, orphanRemoval: true)]
-    private Collection $eventCategories;
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'events')]
+    private Collection $category;
 
     public function __construct()
     {
-        $this->eventCategories = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,14 +81,14 @@ class Event
         return $this;
     }
 
-    public function isIsopen(): ?bool
+    public function isIsOpen(): ?bool
     {
-        return $this->isopen;
+        return $this->isOpen;
     }
 
-    public function setIsopen(bool $isopen): self
+    public function setIsOpen(bool $isOpen): self
     {
-        $this->isopen = $isopen;
+        $this->isOpen = $isOpen;
 
         return $this;
     }
@@ -106,31 +106,25 @@ class Event
     }
 
     /**
-     * @return Collection<int, EventCategory>
+     * @return Collection<int, Category>
      */
-    public function getEventCategories(): Collection
+    public function getCategory(): Collection
     {
-        return $this->eventCategories;
+        return $this->category;
     }
 
-    public function addEventCategory(EventCategory $eventCategory): self
+    public function addCategory(Category $category): self
     {
-        if (!$this->eventCategories->contains($eventCategory)) {
-            $this->eventCategories->add($eventCategory);
-            $eventCategory->setEventId($this);
+        if (!$this->category->contains($category)) {
+            $this->category->add($category);
         }
 
         return $this;
     }
 
-    public function removeEventCategory(EventCategory $eventCategory): self
+    public function removeCategory(Category $category): self
     {
-        if ($this->eventCategories->removeElement($eventCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($eventCategory->getEventId() === $this) {
-                $eventCategory->setEventId(null);
-            }
-        }
+        $this->category->removeElement($category);
 
         return $this;
     }

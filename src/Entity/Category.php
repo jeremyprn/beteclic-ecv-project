@@ -18,12 +18,12 @@ class Category
     #[ORM\Column(length: 160)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'categoryId', targetEntity: EventCategory::class)]
-    private Collection $eventCategories;
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'category')]
+    private Collection $events;
 
     public function __construct()
     {
-        $this->eventCategories = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,30 +44,27 @@ class Category
     }
 
     /**
-     * @return Collection<int, EventCategory>
+     * @return Collection<int, Event>
      */
-    public function getEventCategories(): Collection
+    public function getEvents(): Collection
     {
-        return $this->eventCategories;
+        return $this->events;
     }
 
-    public function addEventCategory(EventCategory $eventCategory): self
+    public function addEvent(Event $event): self
     {
-        if (!$this->eventCategories->contains($eventCategory)) {
-            $this->eventCategories->add($eventCategory);
-            $eventCategory->setCategoryId($this);
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->addCategory($this);
         }
 
         return $this;
     }
 
-    public function removeEventCategory(EventCategory $eventCategory): self
+    public function removeEvent(Event $event): self
     {
-        if ($this->eventCategories->removeElement($eventCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($eventCategory->getCategoryId() === $this) {
-                $eventCategory->setCategoryId(null);
-            }
+        if ($this->events->removeElement($event)) {
+            $event->removeCategory($this);
         }
 
         return $this;
