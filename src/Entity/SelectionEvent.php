@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SelectionEventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SelectionEventRepository::class)]
@@ -21,6 +23,14 @@ class SelectionEvent
 
     #[ORM\ManyToOne(inversedBy: 'selectionEvents')]
     private ?Event $eventId = null;
+
+    #[ORM\OneToMany(mappedBy: 'selectionEventId', targetEntity: Bet::class)]
+    private Collection $bets;
+
+    public function __construct()
+    {
+        $this->bets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +69,36 @@ class SelectionEvent
     public function setEventId(?Event $eventId): self
     {
         $this->eventId = $eventId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bet>
+     */
+    public function getBets(): Collection
+    {
+        return $this->bets;
+    }
+
+    public function addBet(Bet $bet): self
+    {
+        if (!$this->bets->contains($bet)) {
+            $this->bets->add($bet);
+            $bet->setSelectionEventId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBet(Bet $bet): self
+    {
+        if ($this->bets->removeElement($bet)) {
+            // set the owning side to null (unless already changed)
+            if ($bet->getSelectionEventId() === $this) {
+                $bet->setSelectionEventId(null);
+            }
+        }
 
         return $this;
     }

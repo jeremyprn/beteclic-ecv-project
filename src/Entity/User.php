@@ -50,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
+    #[ORM\OneToOne(mappedBy: 'userId', cascade: ['persist', 'remove'])]
+    private ?Bet $bet = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -223,6 +226,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $event->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBet(): ?Bet
+    {
+        return $this->bet;
+    }
+
+    public function setBet(?Bet $bet): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($bet === null && $this->bet !== null) {
+            $this->bet->setUserId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($bet !== null && $bet->getUserId() !== $this) {
+            $bet->setUserId($this);
+        }
+
+        $this->bet = $bet;
 
         return $this;
     }
