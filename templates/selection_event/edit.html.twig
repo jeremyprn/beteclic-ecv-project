@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SelectionEvent{% endblock %}
+
+{% block body %}
+    <h1>Edit SelectionEvent</h1>
+
+    {{ include('selection_event/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_selection_event_index') }}">back to list</a>
+
+    {{ include('selection_event/_delete_form.html.twig') }}
+{% endblock %}
