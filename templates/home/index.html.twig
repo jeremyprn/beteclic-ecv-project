@@ -3,5 +3,16 @@
 {% block title %}Beteclic - Accueil{% endblock %}
 
 {% block body %}
-<h1>Bienvenue sur Beteclic !</h1>
+    <h1>Bienvenue sur Beteclic !</h1>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        L'utilisateur est connecté
+    {% else %}
+        L'utilisateur n'est pas connecté <br />
+
+        <ul>
+            <li><a href="/login">Connexion</a></li>
+            <li><a href="/login">Inscription</a></li>
+        </ul>
+    {% endif %}
 {% endblock %}
