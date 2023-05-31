@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre compte{% endblock %}
+{% block title %}Votre compte - Beteclic{% endblock %}
 
 {% block body %}
     <h1>Votre compte</h1>
 
     <p>Email : {{ app.user.email }}</p>
     <p>Nom : {{ app.user.firstName }} {{ app.user.lastName }}</p>
+    <p>Betecoin : {{ app.user.betecoin }}</p>
+    <p>Âge : {{ app.user.age }}</p>
     <img style="width: 140px;" src="{{ asset('pictures/' ~ app.user.picture) }}" alt="Image de profil">
+
+    <h2>Vos paris en cours</h2>
+    <small>Ajouter les paris en cours</small>
+
+    <h2>Vos paris terminés</h2>
+    <small>Ajouter les paris terminés</small>
 {% endblock %}
