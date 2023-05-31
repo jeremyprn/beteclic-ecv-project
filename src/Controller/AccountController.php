@@ -28,13 +28,18 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $bets = $this->entityManager
+        $allBets = $this->entityManager
         ->getRepository(Bet::class)
         ->findAll();
 
+        $ownBets = $this->entityManager
+        ->getRepository(Bet::class)
+        ->findBy(['userId' => $user->getId()]);
+
         return $this->render('account/index.html.twig', [
             'user' => $user,
-            'bets' => $bets
+            'allBets' => $allBets,
+            'ownBets' => $ownBets
         ]);
     }
 }

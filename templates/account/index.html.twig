@@ -12,12 +12,19 @@
     <img style="width: 140px;" src="{{ asset('pictures/' ~ user.picture) }}" alt="Image de profil">
 
     <h2>Tous les paris</h2>
-    {# C'est juste tous les paris actuellement #}
-    {% for bet in bets %}
+    {# C'est juste tous les paris, actuellement #}
+    {% for bet in allBets %}
         <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>
     {% else %}
         <p>Il n'y a pas de paris actuellement.</p>
     {% endfor %}
    
+
+    <h2>Mes paris</h2>
+     {% for bet in ownBets %}
+        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>
+    {% else %}
+        <p>Vous n'avez pas de paris actuellement.</p>
+    {% endfor %}
 
 {% endblock %}
