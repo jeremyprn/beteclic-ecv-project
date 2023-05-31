@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre compte{% endblock %}
+
+{% block body %}
+    <h1>Votre compte</h1>
+
+    <p>Email : {{ app.user.email }}</p>
+    <p>Nom : {{ app.user.firstName }} {{ app.user.lastName }}</p>
+    <img style="width: 140px;" src="{{ asset('pictures/' ~ app.user.picture) }}" alt="Image de profil">
+{% endblock %}
