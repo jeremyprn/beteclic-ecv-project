@@ -29,6 +29,9 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $event->setIsOpen(true);
+            $event->setDate(new \DateTime());
+            $event->setUserId($this->getUser());
             $eventRepository->save($event, true);
 
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);

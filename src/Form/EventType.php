@@ -14,9 +14,6 @@ class EventType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('date')
-            ->add('isOpen')
-            ->add('userId')
             ->add('category')
         ;
     }
