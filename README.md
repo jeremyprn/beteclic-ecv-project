@@ -21,6 +21,11 @@ docker-compose exec php bin/console d:f:l -n
 ```
 
 ```
+Installer les dépendances JavaScript
+npm intall
+```
+
+```
 Compiler les assets
 npm run dev
 ```

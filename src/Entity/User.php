@@ -61,12 +61,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->events = new ArrayCollection();
         $this->uuid = Uuid::v4()->toRfc4122();
         $this->betecoin = 0;
-
-        // À changer plus tard en fonction du formulaire d'inscription
-        $this->firstname = "Nathan";
-        $this->lastname = "Dubcoage";
-        $this->age = 18;
-        $this->picture = "";
     }
 
     public function getId(): ?int

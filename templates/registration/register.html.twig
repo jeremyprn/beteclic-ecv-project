@@ -1,17 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Beteclic - Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1>Inscrivez-vous</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.firstName, {
+            label: 'Prénom'
+        }) }}
+        {{ form_row(registrationForm.lastName, {
+            label: 'Nom de famille'
+        }) }}
+        {{ form_row(registrationForm.dateOfBirth, {
+            label: 'Date de naissance'
+        }) }}
+        {{ form_row(registrationForm.image, {
+            label: 'Image de profil'
+        }) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit">S'inscrire</button>
     {{ form_end(registrationForm) }}
+
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 {% endblock %}
+

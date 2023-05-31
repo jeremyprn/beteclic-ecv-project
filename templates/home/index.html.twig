@@ -5,14 +5,24 @@
 {% block body %}
     <h1>Bienvenue sur Beteclic !</h1>
 
+     {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         L'utilisateur est connecté
+        <ul>
+            <li><a href="/account">Mon compte</a></li>
+            <li><a href="/logout">Déconnexion</a></li>  
+        </ul>
     {% else %}
         L'utilisateur n'est pas connecté <br />
 
         <ul>
             <li><a href="/login">Connexion</a></li>
-            <li><a href="/login">Inscription</a></li>
+            <li><a href="/register">Inscription</a></li>
         </ul>
     {% endif %}
 {% endblock %}
