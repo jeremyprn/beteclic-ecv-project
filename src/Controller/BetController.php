@@ -50,6 +50,7 @@ class BetController extends AbstractController
                 return $this->render('bet/create.html.twig', [
                     'form' => $form->createView(),
                     'error' => 'Vous n\'avez pas assez de Betecoins pour ce pari.',
+                    'user' => $user,
                 ]);
             }
 
