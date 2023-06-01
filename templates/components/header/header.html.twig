@@ -9,6 +9,11 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <ul>
                     <li>
+                        <p class="beteCoin">
+                            BeteCoin : {{ user.betecoin }}
+                        </p>
+                    </li>
+                    <li>
                         {% include 'components/button/btn.html.twig' with { 'url': '/event/new', 'label': 'Crée ton pari', 'class': 'navBtn smallSize'}%}
                     </li>
                     <li>
