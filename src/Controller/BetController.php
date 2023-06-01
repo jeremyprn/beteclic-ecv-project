@@ -21,6 +21,12 @@ class BetController extends AbstractController
     {
         $event = $entityManager->getRepository(Event::class)->find($eventId);
         $selectionEvent = $entityManager->getRepository(SelectionEvent::class)->find($selectionEventId);
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->addFlash('danger', 'Vous devez être connecté pour pouvoir parier.');
+            return $this->redirectToRoute('app_login');
+        }
 
         if (!$event || !$selectionEvent) {
             throw $this->createNotFoundException('Event or SelectionEvent not found');
@@ -40,9 +46,18 @@ class BetController extends AbstractController
             $potentialGain = $amount * $bet->getOdd();
             $bet->setPotentialGain($potentialGain);
 
+            if ($user->getBetecoin() < $amount) {
+                return $this->render('bet/create.html.twig', [
+                    'form' => $form->createView(),
+                    'error' => 'Vous n\'avez pas assez de Betecoins pour ce pari.',
+                ]);
+            }
+
+            $user->setBetecoin($user->getBetecoin() - $amount);
+
             $entityManager->persist($bet);
             $entityManager->flush();
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('beteclic_home');
         }
 
         return $this->render('bet/create.html.twig', [
