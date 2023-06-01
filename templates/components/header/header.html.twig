@@ -5,6 +5,13 @@
                 <img src="{{ asset('images/favicon.ico') }}" alt="">
             </a>
         </div>
+        <div class="header_wrapper_burger">
+            <div class="header_wrapper_burger_content">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
         <nav class="header_wrapper_nav">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <ul>
@@ -36,3 +43,13 @@
         </nav>
     </div>
 </header>
+
+<script>
+    if(document.querySelector("header") && screen.width < 768){
+        let burgerSection = document.querySelector(".header_wrapper_burger")
+        burgerSection.addEventListener("click",function (){
+            burgerSection.querySelector(".header_wrapper_burger_content").classList.toggle("active");
+            document.querySelector(".header_wrapper_nav").classList.toggle("-open");
+        });
+    }
+</script>

@@ -70,3 +70,17 @@
 
   }
 }
+
+@media screen and (max-width: 768px) {
+  .account_layout{
+    gap: 3rem;
+    .ui-wrapper{
+      width: 90%;
+    }
+    .account_info{
+      &_informations{
+        min-width: unset;
+      }
+    }
+  }
+}
