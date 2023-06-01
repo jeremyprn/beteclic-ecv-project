@@ -42,6 +42,7 @@ class BetController extends AbstractController
 
             $entityManager->persist($bet);
             $entityManager->flush();
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('bet/create.html.twig', [
