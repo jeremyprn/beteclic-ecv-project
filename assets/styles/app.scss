@@ -5,6 +5,11 @@ $backgroundColor : #EEF0F3;
 $yellow: #ffcc00;
 $red: #e10014;
 
+:root {
+  --title-section: 2.4rem;
+  --title-big: 3rem;
+}
+
 *,
 ::before,
 ::after {
@@ -46,4 +51,11 @@ ul{
   padding: 4rem;
   border-radius: 1.6rem;
   background-color: white;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --title-section: 1.8rem;
+    --title-big: 2rem;
+  }
 }

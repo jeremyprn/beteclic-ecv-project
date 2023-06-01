@@ -1,5 +1,7 @@
 .layout {
     display: flex;
+    max-width: 1600px;
+    margin-inline: auto;
 
     aside {
         width: 300px;
@@ -21,7 +23,7 @@
         padding: 2rem;
 
         .title_section {
-            font-size: 2.4rem;
+            font-size: var(--title-section);
             line-height: 3rem;
             font-weight: 700;
             margin-bottom: 0;
@@ -44,7 +46,7 @@
                 h2 {
                     text-transform: uppercase;
                     font-style: italic;
-                    font-size: 3rem;
+                    font-size: var(--title-big);
                     color: #fff;
                     max-width: 800px;
                     line-height: 4.5rem;
@@ -81,6 +83,18 @@
                 background-color: #fff;
                 color: #000;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .layout {    
+        aside {
+            display: none;
+        }
+
+        main .inscription__offer {
+            height: unset;
         }
     }
 }
