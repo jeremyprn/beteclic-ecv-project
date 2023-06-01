@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->bets = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->uuid = Uuid::v4()->toRfc4122();
-        $this->betecoin = 0;
+        $this->betecoin = 10;
     }
 
     public function getId(): ?int
