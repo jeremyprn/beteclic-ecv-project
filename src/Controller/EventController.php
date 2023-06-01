@@ -27,6 +27,7 @@ class EventController extends AbstractController
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
@@ -37,6 +38,7 @@ class EventController extends AbstractController
         return $this->renderForm('event/new.html.twig', [
             'event' => $event,
             'form' => $form,
+            'user' => $user,
         ]);
     }
 
