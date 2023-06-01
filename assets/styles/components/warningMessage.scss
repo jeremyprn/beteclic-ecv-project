@@ -4,8 +4,10 @@
   justify-content: center;
 }
 
-.error {
+.error,
+#bet ul {
   color: red;
   font-size: 10px;
   font-style: italic;
+  margin-bottom: 4px;
 }

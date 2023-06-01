@@ -10,10 +10,8 @@
                 <h2 class="sub-title">{{ selectionEvent.label }}</h2>
             </div>
 
-            <div class="error">
-                {{ error }}
-            </div>
-            {{ include('bet/_create-form.html.twig') }}
+            {{ include('bet/_create-form.html.twig', {'error': error}) }}
+
         </div>
     </div>
 {% endblock %}

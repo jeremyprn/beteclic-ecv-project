@@ -6,8 +6,6 @@ use App\Entity\Bet;
 use App\Entity\Event;
 use App\Entity\SelectionEvent;
 use App\Form\BetType;
-use App\Repository\BetRepository;
-use App\Repository\SelectionEventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BetController extends AbstractController
 {
     #[Route('/event/{eventId}/selection-event/{selectionEventId}/create', name: 'app_bet_new', methods: ['GET', 'POST'], requirements: ['eventId' => '\d+', 'selectionEventId' => '\d+'])]
-    public function newBet(Request $request, int $eventId, int $selectionEventId, EntityManagerInterface $entityManager, SelectionEventRepository $selectionEventRepository): Response
+    public function newBet(Request $request, int $eventId, int $selectionEventId, EntityManagerInterface $entityManager): Response
     {
         $event = $entityManager->getRepository(Event::class)->find($eventId);
         $selectionEvent = $entityManager->getRepository(SelectionEvent::class)->find($selectionEventId);
@@ -46,10 +44,10 @@ class BetController extends AbstractController
             $betForm = $form->getData();
             $amount = $betForm->getAmount();
 
-            if ($amount < 0) {
+            if ($amount < 0 || $amount == 0 || !is_numeric($amount)) {
                 return $this->render('bet/create.html.twig', [
                     'form' => $form->createView(),
-                    'error' => 'Vous ne pouvez pas parier une somme négative.',
+                    'error' => 'Vous ne pouvez pas parier une somme négative ou égale à zéro.',
                     'user' => $user,
                     'event' => $event,
                     'selectionEvent' => $selectionEvent,
@@ -73,7 +71,7 @@ class BetController extends AbstractController
 
             $entityManager->persist($bet);
             $entityManager->flush();
-            return $this->redirectToRoute('beteclic_home');
+            return $this->redirectToRoute('beteclic_account');
         }
 
         return $this->render('bet/create.html.twig', [
@@ -81,6 +79,7 @@ class BetController extends AbstractController
             'user' => $user,
             'event' => $event,
             'selectionEvent' => $selectionEvent,
+            "error" => ""
         ]);
     }
 }

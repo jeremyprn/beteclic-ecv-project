@@ -1,4 +1,8 @@
 {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="error">
+        {{ error }}
+    </div>
     {{ form_widget(form) }}
-    <button  class="btn loginBtn mediumSize">{{ button_label|default('Valider') }}</button>
+    <button class="btn loginBtn mediumSize">{{ button_label|default('Valider') }}</button>
 {{ form_end(form) }}
