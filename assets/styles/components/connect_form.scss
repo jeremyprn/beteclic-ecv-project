@@ -1,0 +1,43 @@
+.form_layout{
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+  .form{
+    background-color: white;
+    width: fit-content;
+    padding: 4rem;
+    border-radius: 1.6rem;
+    &_title{
+      h1{
+        text-align: center;
+        font-size: 2.2rem;
+        line-height: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 3.2rem ;
+      }
+    }
+    .ui-input, div{
+      position: relative;
+      input{
+        width: 100%;
+        border: 0.1rem solid transparent;
+        border-radius: 0.8rem;
+        background: #eef0f3;
+        padding: 1.2rem 2rem;
+        caret-color: #272a30;
+        width: 100%;
+        margin-bottom: 1.6rem;
+      }
+      label{
+        font-size: 1.5rem;
+        line-height: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 3.2rem ;
+      }
+    }
+    button{
+      margin-top: 3.2rem;
+      width: 100%;
+    }
+  }
+}

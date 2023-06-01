@@ -32,4 +32,10 @@
       background-color: #414752;
     }
   }
+  &.loginBtn{
+    background-color: #e10014;
+    &:hover{
+      background-color: #ff4152;
+    }
+  }
 }
