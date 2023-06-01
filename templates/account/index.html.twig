@@ -38,7 +38,7 @@
             <h2>Mes paris</h2>
             <div class="account_bet_container">
                 {% for bet in ownBets %}
-                    {% if bet.selectionEventId.label == bet.selectionEventId.eventId.selectionEventId.label %}
+                    {% if bet.selectionEventId.eventId.selectionEventId.label is defined and bet.selectionEventId.label == bet.selectionEventId.eventId.selectionEventId.label %}
                         {% set statusBet = 'win' %}
                     {% else %}
                         {% set statusBet = 'lose' %}
