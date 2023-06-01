@@ -1,4 +1,7 @@
 .header{
+  position: sticky;
+  top: 0;
+  
   background-color: $primary;
   &_wrapper{
     padding: 0 2.4rem;
