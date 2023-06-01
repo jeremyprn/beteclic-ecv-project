@@ -3,29 +3,17 @@
 {% block title %}Beteclic - Accueil{% endblock %}
 
 {% block body %}
-{# <div class="layout">
+<div class="layout">
     <aside>
         <div class="content">
+        
             <h3 class="title_categorie">Catégories</h3>
             <ul class="categories">
+            {% for category in categories %}
                 <li>
-                    <a href="#">Catégorie 1</a>
+                    <a href="{{ path('app_category_show', {'id': category.getId()}) }}">{{ category.getName() }}</a>
                 </li>
-                <li>
-                    <a href="#">Catégorie 2</a>
-                </li>
-                <li>
-                    <a href="#">Catégorie 3</a>
-                </li>
-                <li>
-                    <a href="#">Catégorie 4</a>
-                </li>
-                <li>
-                    <a href="#">Catégorie 5</a>
-                </li>
-                <li>
-                    <a href="#">Catégorie 6</a>
-                </li>
+            {% endfor %}
             </ul>
         </div>
     </aside>
@@ -39,39 +27,21 @@
             </div>
         {% endif %}
         <section id="last_bets">
-            {% if bets|length > 0 %}
+            {% if events|length > 0 %}
                 <h2 class="title_section">Les deux derniers bets</h2>
-                {% for bet in bets|slice(-2) %}
+                {% for event in events|slice(-2) %}
                     <article class="bet_card">
                         <div class="bet_card-infos">
-                            <h3>Ici la question du bets</h3>
-                            <p>Ici la description du bets</p>
+                            <h3>{{ event.getTitle() }}</h3>
+                            <p>{{ event.getDescription }}</p>
                         </div>
                         <div class="bet_card-buttons">
-                            <a href="" class="oddButton">
-                                <span class="label">Oui</span>
-                                <span class="odd">3,00</span>
+                        {% for selectionEvent in event.getSelectionEvents() %}
+                            <a href="{{ path('app_bet_new', {'eventId': event.getId(), 'selectionEventId': selectionEvent.getId()}) }}" class="oddButton">
+                                <span class="label">{{ selectionEvent.getLabel() }}</span>
+                                <span class="odd">{{ selectionEvent.getOdd() }}</span>
                             </a>
-                            <a href="" class="oddButton">
-                                <span class="label">Non</span>
-                                <span class="odd">5,00</span>
-                            </a>
-                        </div>
-                    </article>
-                    <article class="bet_card">
-                        <div class="bet_card-infos">
-                            <h3>Ici la question du bets</h3>
-                            <p>Ici la description du bets</p>
-                        </div>
-                        <div class="bet_card-buttons">
-                            <a href="" class="oddButton">
-                                <span class="label">Oui</span>
-                                <span class="odd">3,00</span>
-                            </a>
-                            <a href="" class="oddButton">
-                                <span class="label">Non</span>
-                                <span class="odd">5,00</span>
-                            </a>
+                        {% endfor %}
                         </div>
                     </article>
                 {% endfor %}
@@ -79,45 +49,27 @@
                 <p>Il n'y a pas encore de bets d'enregistré...</p>
             {% endif %}
         </section>
-        {# {% if bets|length > 3 %} #}
-            {# <section id="bets_available">
+        {% if events|length > 3 %}
+            <section id="bets_available">
                 <h2 class="title_section">Les bets actifs</h2>
-                                {% for bet in bets|slice(-2) %}
+                    {% for bet in events|slice(-2) %}
                     <article class="bet_card">
                         <div class="bet_card-infos">
-                            <h3>Ici la question du bets</h3>
-                            <p>Ici la description du bets</p>
+                            <h3>{{ event.getTitle() }}</h3>
+                            <p>{{ event.getDescription }}</p>
                         </div>
                         <div class="bet_card-buttons">
-                            <a href="" class="oddButton">
-                                <span class="label">Oui</span>
-                                <span class="odd">3,00</span>
-                            </a>
-                            <a href="" class="oddButton">
-                                <span class="label">Non</span>
-                                <span class="odd">5,00</span>
-                            </a>
-                        </div>
-                    </article>
-                    <article class="bet_card">
-                        <div class="bet_card-infos">
-                            <h3>Ici la question du bets</h3>
-                            <p>Ici la description du bets</p>
-                        </div>
-                        <div class="bet_card-buttons">
-                            <a href="" class="oddButton">
-                                <span class="label">Oui</span>
-                                <span class="odd">3,00</span>
-                            </a>
-                            <a href="" class="oddButton">
-                                <span class="label">Non</span>
-                                <span class="odd">5,00</span>
-                            </a>
+                            {% for selectionEvent in event.getSelectionEvents() %}
+                                <a href="{{ path('app_bet_new', {'eventId': event.getId(), 'selectionEventId': selectionEvent.getId()}) }}" class="oddButton">
+                                    <span class="label">{{ selectionEvent.getLabel() }}</span>
+                                    <span class="odd">{{ selectionEvent.getOdd() }}</span>
+                                </a>
+                            {% endfor %}
                         </div>
                     </article>
                 {% endfor %}
-            </section> #}
-        {# {% endif %} #}
-    {# </main> #}
-{# </div> #}
+            </section>
+        {% endif %}
+    </main>
+</div>
 {% endblock %}
