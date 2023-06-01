@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\SelectionEvent;
 use App\Form\BetType;
 use App\Repository\BetRepository;
+use App\Repository\SelectionEventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BetController extends AbstractController
 {
     #[Route('/event/{eventId}/selection-event/{selectionEventId}/create', name: 'app_bet_new', methods: ['GET', 'POST'])]
-    public function newBet(Request $request, int $eventId, int $selectionEventId, EntityManagerInterface $entityManager): Response
+    public function newBet(Request $request, int $eventId, int $selectionEventId, EntityManagerInterface $entityManager, SelectionEventRepository $selectionEventRepository): Response
     {
         $event = $entityManager->getRepository(Event::class)->find($eventId);
         $selectionEvent = $entityManager->getRepository(SelectionEvent::class)->find($selectionEventId);
@@ -32,6 +33,7 @@ class BetController extends AbstractController
             throw $this->createNotFoundException('Event or SelectionEvent not found');
         }
 
+    
         $bet = new Bet();
         $bet->setSelectionEventId($selectionEvent);
         $bet->setUserId($this->getUser());
