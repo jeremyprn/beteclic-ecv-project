@@ -26,7 +26,7 @@ class Bet
     #[ORM\JoinColumn(nullable: false)]
     private ?User $userId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'bets')]
+    #[ORM\ManyToOne(targetEntity: SelectionEvent::class, inversedBy: 'bets')]
     private ?SelectionEvent $selectionEventId = null;
 
     public function getId(): ?int
