@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\SelectionEvent;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +30,14 @@ class EventController extends AbstractController
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
         $user = $this->getUser();
+        $selectEvent = new SelectionEvent();
+
+        $event->setUserId($user);
+        $event->setIsOpen(1);
+
+        $selectEvent->setEventId($event);
+        $selectEvent->setOdd(2);
+        $selectEvent->setLabel("test");
 
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
