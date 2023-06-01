@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +19,16 @@ class HomeController extends AbstractController
             ->findAll();
 
 
+        $events = $entityManager
+            ->getRepository(Event::class)
+            ->findAll();
+
         $user = $this->getUser();
 
 
         return $this->render('home/index.html.twig', [
             'categories' => $categories,
+            'events' => $events,
             'user' => $user,
         ]);
     }
