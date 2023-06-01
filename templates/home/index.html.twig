@@ -3,29 +3,121 @@
 {% block title %}Beteclic - Accueil{% endblock %}
 
 {% block body %}
-    <h1>Liste de tous les paris par catégorie</h1> 
-
-    {% for category in categories %}
-        <h2>{{ category.getName() }}</h2>
-        {% for event in category.getEvents() %}
-            {% if event.isIsOpen() %}
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ event.getTitle() }}</h5>
-                        <p class="card-text">{{ event.getDescription() }}</p>
-
-                        {% for selectionEvent in event.getSelectionEvents() %}
-                            <a href="">
-                                <span>{{ selectionEvent.getLabel() }}</span>
-                                <span>{{ selectionEvent.getOdd() }}</span>
-                                <a href="{{ path('app_bet_new', {'eventId': event.getId(), 'selectionEventId': selectionEvent.getId()}) }}">Parier</a>
+{# <div class="layout">
+    <aside>
+        <div class="content">
+            <h3 class="title_categorie">Catégories</h3>
+            <ul class="categories">
+                <li>
+                    <a href="#">Catégorie 1</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 2</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 3</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 4</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 5</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 6</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <main>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="inscription__offer">
+                <a href="/register">
+                    <h2>10 Betecoins offerts pour votre première inscription.</h2>
+                    <span class="inscription__offer-btn">Je m'inscris</span>
+                </a>
+            </div>
+        {% endif %}
+        <section id="last_bets">
+            {% if bets|length > 0 %}
+                <h2 class="title_section">Les deux derniers bets</h2>
+                {% for bet in bets|slice(-2) %}
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
                             </a>
-                        {% endfor %}
-
-                        <a href="#" class="btn btn-primary">Voir plus</a>
-                    </div>
-                </div>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>Il n'y a pas encore de bets d'enregistré...</p>
             {% endif %}
-        {% endfor %}
-    {% endfor %}
+        </section>
+        {# {% if bets|length > 3 %} #}
+            {# <section id="bets_available">
+                <h2 class="title_section">Les bets actifs</h2>
+                                {% for bet in bets|slice(-2) %}
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section> #}
+        {# {% endif %} #}
+    {# </main> #}
+{# </div> #}
 {% endblock %}

@@ -1,0 +1,128 @@
+.layout {
+    display: flex;
+    max-width: 1600px;
+    margin-inline: auto;
+
+    aside {
+        width: 300px;
+        padding: 2.5rem 2rem;
+        position: sticky;
+        height: 100%;
+        overflow-y: hidden;
+        top: 52px;
+
+        .content {
+            max-height: 100vh;
+            overflow-y: auto;
+
+            .title_categorie {
+                font-size: 1.6rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .categories {
+                background-color: #fff;
+                border-radius: 1.6rem;
+                padding: 0 1.2rem;
+                li {
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    padding: .8rem 0;
+
+                    &:not(:last-of-type) {
+                        border-bottom: 1px solid #eef0f3;
+                    }
+
+                    a {
+                        text-decoration: unset;
+                        color: #000;
+                        font-weight: 600;
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+        }
+    }
+
+    main {
+        flex-grow: 1;
+        padding: 2rem;
+
+        .title_section {
+            font-size: var(--title-section);
+            line-height: 3rem;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .inscription__offer {
+            background-color: $red;
+            border-radius: 1.6rem;
+            padding: 2rem;
+            height: 200px;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            a {
+                text-align: center;
+                text-decoration: none;
+
+                h2 {
+                    text-transform: uppercase;
+                    font-style: italic;
+                    font-size: var(--title-big);
+                    color: #fff;
+                    max-width: 800px;
+                    line-height: 4.5rem;
+                    margin-bottom: 3rem;
+                }
+
+                .inscription__offer-btn {
+                    color: #fff;
+                    font-weight: 700;
+                    font-size: 2rem;
+
+                    &::after {
+                        content: '';
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 2px;
+                        border-bottom: 4px solid #fff;
+                        border-right: 4px solid #fff;
+                        display: inline-block;
+                        transform: rotate(-45deg);
+                        margin-left: 20px;
+                    }
+                }
+            }
+        }
+
+        #bets_available {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+
+            .bet_card:nth-child(odd) {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .layout {    
+        aside {
+            display: none;
+        }
+
+        main .inscription__offer {
+            height: unset;
+        }
+    }
+}
