@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/bet')]
 class BetController extends AbstractController
 {
-    #[Route('/event/{eventId}/selection-event/{selectionEventId}/create', name: 'app_bet_new', methods: ['GET', 'POST'])]
+    #[Route('/event/{eventId}/selection-event/{selectionEventId}/create', name: 'app_bet_new', methods: ['GET', 'POST'], requirements: ['eventId' => '\d+', 'selectionEventId' => '\d+'])]
     public function newBet(Request $request, int $eventId, int $selectionEventId, EntityManagerInterface $entityManager, SelectionEventRepository $selectionEventRepository): Response
     {
         $event = $entityManager->getRepository(Event::class)->find($eventId);
@@ -30,7 +30,7 @@ class BetController extends AbstractController
         }
 
         if (!$event || !$selectionEvent) {
-            throw $this->createNotFoundException('Event or SelectionEvent not found');
+            return $this->redirectToRoute('beteclic_home');
         }
 
     
@@ -45,6 +45,17 @@ class BetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $betForm = $form->getData();
             $amount = $betForm->getAmount();
+
+            if ($amount < 0) {
+                return $this->render('bet/create.html.twig', [
+                    'form' => $form->createView(),
+                    'error' => 'Vous ne pouvez pas parier une somme négative.',
+                    'user' => $user,
+                    'event' => $event,
+                    'selectionEvent' => $selectionEvent,
+                ]);
+            }
+
             $potentialGain = $amount * $bet->getOdd();
             $bet->setPotentialGain($potentialGain);
 
@@ -53,6 +64,8 @@ class BetController extends AbstractController
                     'form' => $form->createView(),
                     'error' => 'Vous n\'avez pas assez de Betecoins pour ce pari.',
                     'user' => $user,
+                    'event' => $event,
+                    'selectionEvent' => $selectionEvent,
                 ]);
             }
 

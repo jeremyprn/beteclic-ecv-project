@@ -9,6 +9,10 @@
                 <h1 class="add-title">{{ event.title }}</h1>
                 <h2 class="sub-title">{{ selectionEvent.label }}</h2>
             </div>
+
+            <div class="error">
+                {{ error }}
+            </div>
             {{ include('bet/_create-form.html.twig') }}
         </div>
     </div>
