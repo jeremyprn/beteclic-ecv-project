@@ -3,29 +3,99 @@
 {% block title %}Beteclic - Accueil{% endblock %}
 
 {% block body %}
-{#    <h1>Bienvenue sur Beteclic !</h1>#}
-
-{#     {% for message in app.flashes('success') %}#}
-{#        <div class="alert alert-success">#}
-{#            {{ message }}#}
-{#        </div>#}
-{#    {% endfor %}#}
-
-{#    {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
-{#        L'utilisateur est connecté#}
-{#        <ul>#}
-{#            <li><a href="/account">Mon compte</a></li>#}
-{#            <li><a href="/logout">Déconnexion</a></li>#}
-{#        </ul>#}
-{#    {% else %}#}
-{#        L'utilisateur n'est pas connecté <br />#}
-
-{#        <ul>#}
-{#            <li><a href="/login">Connexion</a></li>#}
-{#            <li><a href="/register">Inscription</a></li>#}
-{#        </ul>#}
-{#    {% endif %}#}
-
-{#    <h2>Parier de suite</h2>#}
-{#    <small>Afficher les paris ici</small>#}
+<div class="layout">
+    <aside>
+        <div class="content"></div>
+    </aside>
+    <main>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="inscription__offer">
+                <a href="/register">
+                    <h2>10 Betecoins offerts pour votre première inscription.</h2>
+                    <span class="inscription__offer-btn">Je m'inscris</span>
+                </a>
+            </div>
+        {% endif %}
+        <section id="last_bets">
+            {% if bets|length > 0 %}
+                <h2 class="title_section">Les deux derniers bets</h2>
+                {% for bet in bets|slice(-2) %}
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>Il n'y a pas encore de bets d'enregistré...</p>
+            {% endif %}
+        </section>
+        {# {% if bets|length > 3 %} #}
+            <section id="bets_available">
+                <h2 class="title_section">Les bets actifs</h2>
+                                {% for bet in bets|slice(-2) %}
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                    <article class="bet_card">
+                        <div class="bet_card-infos">
+                            <h3>Ici la question du bets</h3>
+                            <p>Ici la description du bets</p>
+                        </div>
+                        <div class="bet_card-buttons">
+                            <a href="" class="oddButton">
+                                <span class="label">Oui</span>
+                                <span class="odd">3,00</span>
+                            </a>
+                            <a href="" class="oddButton">
+                                <span class="label">Non</span>
+                                <span class="odd">5,00</span>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {# {% endif %} #}
+    </main>
+</div>
 {% endblock %}
