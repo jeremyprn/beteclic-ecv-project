@@ -38,7 +38,12 @@
             <h2>Mes paris</h2>
             <div class="account_bet_container">
                 {% for bet in ownBets %}
-                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'win', 'label' : bet.selectionEventId.eventId.title, 'answer' : bet.selectionEventId.label, 'amount' : bet.amount, 'odd' : bet.odd, 'isOpen': bet.selectionEventId.eventId.isOpen} %}
+                    {% if bet.selectionEventId.label == bet.selectionEventId.eventId.selectionEventId.label %}
+                        {% set statusBet = 'win' %}
+                    {% else %}
+                        {% set statusBet = 'lose' %}
+                    {% endif %}
+                    {% include 'components/bets_card/bets_card.html.twig' with {'status': statusBet, 'label' : bet.selectionEventId.eventId.title, 'answer' : bet.selectionEventId.label, 'amount' : bet.amount, 'odd' : bet.odd, 'isOpen': bet.selectionEventId.eventId.isOpen} %}
                 {% else %}
                     <div class="account_bet_noBets">
                         <div class="account_bet_noBets_picto">
