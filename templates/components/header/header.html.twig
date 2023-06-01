@@ -9,6 +9,9 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <ul>
                     <li>
+                        {% include 'components/button/btn.html.twig' with { 'url': '/event/new', 'label': 'Crée ton pari', 'class': 'navBtn smallSize'}%}
+                    </li>
+                    <li>
                         {% include 'components/button/btn.html.twig' with { 'url': '/account', 'label': 'Mon compte', 'class': 'navBtn smallSize'}%}
                     </li>
                     <li>

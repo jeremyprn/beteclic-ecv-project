@@ -25,6 +25,10 @@ class Category
     {
         $this->events = new ArrayCollection();
     }
+    public function __toString(): string
+    {
+        return "";
+    }
 
     public function getId(): ?int
     {
