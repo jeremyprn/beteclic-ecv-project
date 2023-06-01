@@ -53,11 +53,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
-    #[ORM\OneToOne(mappedBy: 'userId', cascade: ['persist', 'remove'])]
-    private ?Bet $bet = null;
+
+    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Bet::class, orphanRemoval: true)]
+    private Collection $bets;
 
     public function __construct()
     {
+        $this->bets = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->uuid = Uuid::v4()->toRfc4122();
         $this->betecoin = 0;
@@ -226,7 +228,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeEvent(Event $event): self
     {
         if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
             if ($event->getUserId() === $this) {
                 $event->setUserId(null);
             }
@@ -235,27 +236,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBet(): ?Bet
+    public function getBets(): Collection
     {
-        return $this->bet;
+        return $this->bets;
     }
 
-    public function setBet(?Bet $bet): self
+    public function addBet(Bet $bet): self
     {
-        // unset the owning side of the relation if necessary
-        if ($bet === null && $this->bet !== null) {
-            $this->bet->setUserId(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($bet !== null && $bet->getUserId() !== $this) {
+        if (!$this->bets->contains($bet)) {
+            $this->bets[] = $bet;
             $bet->setUserId($this);
         }
 
-        $this->bet = $bet;
+        return $this;
+    }
+
+    public function removeBet(Bet $bet): self
+    {
+        if ($this->bets->removeElement($bet)) {
+            if ($bet->getUserId() === $this) {
+                $bet->setUserId(null);
+            }
+        }
 
         return $this;
     }
+
 
     public function __toString(): string
     {

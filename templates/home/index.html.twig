@@ -18,7 +18,7 @@
                             <a href="">
                                 <span>{{ selectionEvent.getLabel() }}</span>
                                 <span>{{ selectionEvent.getOdd() }}</span>
-                                {# <a href="{{ path('path_to_your_form', {'eventId': event.getId(), 'selectionEventId': selectionEvent.getId()}) }}">Parier</a> #}
+                                <a href="{{ path('app_bet_new', {'eventId': event.getId(), 'selectionEventId': selectionEvent.getId()}) }}">Parier</a>
                             </a>
                         {% endfor %}
 

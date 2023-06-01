@@ -22,7 +22,8 @@ class Bet
     #[ORM\Column]
     private ?float $potentialGain = null;
 
-    #[ORM\OneToOne(inversedBy: 'bet', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bets')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $userId = null;
 
     #[ORM\ManyToOne(inversedBy: 'bets')]
