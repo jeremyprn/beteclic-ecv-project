@@ -38,6 +38,9 @@ class Event
     #[ORM\OneToMany(mappedBy: 'eventId', targetEntity: SelectionEvent::class)]
     private Collection $selectionEvents;
 
+    #[ORM\OneToOne(inversedBy: 'event', cascade: ['persist', 'remove'])]
+    private ?SelectionEvent $selectionEventId = null;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -159,6 +162,18 @@ class Event
                 $selectionEvent->setEventId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSelectionEventId(): ?SelectionEvent
+    {
+        return $this->selectionEventId;
+    }
+
+    public function setSelectionEventId(?SelectionEvent $selectionEventId): self
+    {
+        $this->selectionEventId = $selectionEventId;
 
         return $this;
     }
