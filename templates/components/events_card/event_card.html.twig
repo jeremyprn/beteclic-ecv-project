@@ -1,0 +1,15 @@
+<article class="bet_card">
+    <div class="bet_card-infos">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+    </div>
+    <div class="bet_card-buttons">
+        {% for selection in event.selectionEvents %}
+            <a href="/event/{{ event.id }}/validate/{{ selection.id }}" class="oddButton">
+                <span class="label">{{ selection.getLabel() }}</span>
+                <span class="odd">{{ selection.getOdd() }}</span>
+    {#            <a href="">Valider ce choix</a>#}
+            </a>
+        {% endfor %}
+    </div>
+</article>
