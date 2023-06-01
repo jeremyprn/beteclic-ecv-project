@@ -66,6 +66,8 @@ class BetController extends AbstractController
         return $this->render('bet/create.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
+            'event' => $event,
+            'selectionEvent' => $selectionEvent,
         ]);
     }
 }
