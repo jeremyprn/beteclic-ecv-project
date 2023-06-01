@@ -3,11 +3,13 @@
         <div class="type">
             <p>Simple</p>
         </div>
-        <div class="status {{ status }}">
-            {% if status == "win" %}
-                <p>Gagné</p>
-            {% elseif status == "lose" %}
-                <p>Perdu</p>
+        <div class="status {% if isOpen == false %}{{ status }}{% else %}progress{% endif %}">
+            {% if isOpen == false %}
+                {% if status == "win" %}
+                    <p>Gagné</p>
+                {% else %}
+                    <p>Perdu</p>
+                {% endif %}
             {% else %}
                 <p>En cours</p>
             {% endif %}
@@ -22,7 +24,7 @@
             <p>Mise</p>
             <p>{{ amount }} €</p>
         </div>
-        <div class="bets_card_stake_gain {{ status }}">
+        <div class="bets_card_stake_gain {% if isOpen == false %}{{ status }}{% else %}progress{% endif %}">
             <p>Gains</p>
             <p>{{ amount * odd }} €</p>
         </div>

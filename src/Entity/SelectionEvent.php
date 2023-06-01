@@ -27,6 +27,9 @@ class SelectionEvent
     #[ORM\OneToMany(mappedBy: 'selectionEventId', targetEntity: Bet::class)]
     private Collection $bets;
 
+    #[ORM\OneToOne(mappedBy: 'selectionEventId', cascade: ['persist', 'remove'])]
+    private ?Event $event = null;
+
     public function __construct()
     {
         $this->bets = new ArrayCollection();
@@ -106,5 +109,27 @@ class SelectionEvent
     public function __toString(): string
     {
         return "";
+    }
+    
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($event === null && $this->event !== null) {
+            $this->event->setSelectionEventId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($event !== null && $event->getSelectionEventId() !== $this) {
+            $event->setSelectionEventId($this);
+        }
+
+        $this->event = $event;
+
+        return $this;
     }
 }

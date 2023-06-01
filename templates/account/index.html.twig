@@ -38,20 +38,22 @@
             <h2>Mes paris</h2>
             <div class="account_bet_container">
                 {% for bet in ownBets %}
-                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'win', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 2.00, 'odd' : 2.6} %}
+                    {% if bet.selectionEventId.label == bet.selectionEventId.eventId.selectionEventId.label %}
+                        {% set statusBet = 'win' %}
+                    {% else %}
+                        {% set statusBet = 'lose' %}
+                    {% endif %}
+                    {% include 'components/bets_card/bets_card.html.twig' with {'status': statusBet, 'label' : bet.selectionEventId.eventId.title, 'answer' : bet.selectionEventId.label, 'amount' : bet.amount, 'odd' : bet.odd, 'isOpen': bet.selectionEventId.eventId.isOpen} %}
                 {% else %}
-                                    <div class="account_bet_noBets">
-                                        <div class="account_bet_noBets_picto">
-                                            <img src="{{ asset('images/picto/noBets.svg') }}" alt="noBets">
-                                        </div>
-                                        <div class="account_bet_noBets_info">
-                                            <p>Tu n'as pas de paris en cours. Tente ta chance avec le top des paris!</p>
-                                            {% include 'components/button/btn.html.twig' with { 'url': '/', 'label': 'Voir le top des paris', 'class': 'parisBtn mediumSize'}%}
-                                        </div>
-                                    </div>
-{#                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'win', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 2.00, 'odd' : 2.6} %}#}
-{#                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'lose', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 20.00, 'odd' : 3} %}#}
-{#                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'progress', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 3.00, 'odd' : 8.6} %}#}
+                    <div class="account_bet_noBets">
+                        <div class="account_bet_noBets_picto">
+                            <img src="{{ asset('images/picto/noBets.svg') }}" alt="noBets">
+                        </div>
+                        <div class="account_bet_noBets_info">
+                            <p>Tu n'as pas de paris en cours. Tente ta chance avec le top des paris!</p>
+                            {% include 'components/button/btn.html.twig' with { 'url': '/', 'label': 'Voir le top des paris', 'class': 'parisBtn mediumSize'}%}
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
