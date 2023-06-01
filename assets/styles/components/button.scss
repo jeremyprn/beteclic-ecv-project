@@ -1,0 +1,35 @@
+.btn{
+  line-height: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border: none;
+  border-radius: 0.8rem;
+  user-select: none;
+  overflow: hidden;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  &.smallSize{
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+  &.mediumSize{
+    font-size: 1.4rem;
+    padding: 1.2rem 2rem;
+  }
+  &.navBtn{
+    background-color: $primaryAlt;
+    &:hover{
+      background-color: $primaryAltHover;
+    }
+  }
+  &.parisBtn{
+    background-color: #272a30;
+    &:hover{
+      background-color: #414752;
+    }
+  }
+}

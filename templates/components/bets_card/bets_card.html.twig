@@ -1,0 +1,30 @@
+<div class="bets_card">
+    <div class="bets_card_status">
+        <div class="type">
+            <p>Simple</p>
+        </div>
+        <div class="status {{ status }}">
+            {% if status == "win" %}
+                <p>Gagné</p>
+            {% elseif status == "lose" %}
+                <p>Perdu</p>
+            {% else %}
+                <p>En cours</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="bets_card_info">
+        <p>{{ label }}</p>
+        <p>Mon pari : {{ answer }}</p>
+    </div>
+    <div class="bets_card_stake">
+        <div class="bets_card_stake_bet">
+            <p>Mise</p>
+            <p>{{ amount }} €</p>
+        </div>
+        <div class="bets_card_stake_gain {{ status }}">
+            <p>Gains</p>
+            <p>{{ amount * odd }} €</p>
+        </div>
+    </div>
+</div>

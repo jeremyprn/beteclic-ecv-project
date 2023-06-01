@@ -1,0 +1,23 @@
+.header{
+  background-color: $primary;
+  &_wrapper{
+    padding: 0 2.4rem;
+    height: 5.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &_logo{
+      height: 100%;
+      img{
+        height: 100%;
+      }
+    }
+    &_nav{
+      display: flex;
+      ul{
+        display: flex;
+        gap: 1rem;
+      }
+    }
+  }
+}

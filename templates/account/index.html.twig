@@ -3,28 +3,74 @@
 {% block title %}Votre compte - Beteclic{% endblock %}
 
 {% block body %}
-    <h1>Votre compte</h1>
+    <div class="account_layout">
+        <div class="ui-wrapper account_info">
+            <h2>Mes informations</h2>
+            <div class="account_info_picture">
+                <img src="{{ asset('pictures/' ~ user.picture) }}" alt="Image de profil">
+            </div>
+            <div class="account_info_informations">
+                <ul>
+                    <li>
+                        <p>Nom :</p>
+                        <p>{{ user.firstName }}</p>
+                    </li>
+                    <li>
+                        <p>Prénom :</p>
+                        <p>{{ user.lastName }}</p>
+                    </li>
+                    <li>
+                        <p>Email :</p>
+                        <p>{{ user.email }}</p>
+                    </li>
+                    <li>
+                        <p>Âge :</p>
+                        <p>{{ user.age }}</p>
+                    </li>
+                    <li>
+                        <p>Bêtecoin :</p>
+                        <p>{{ user.betecoin }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ui-wrapper account_bet">
+            <h2>Mes paris</h2>
+            <div class="account_bet_container">
+                {% for bet in ownBets %}
+                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'win', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 2.00, 'odd' : 2.6} %}
+                {% else %}
+                                    <div class="account_bet_noBets">
+                                        <div class="account_bet_noBets_picto">
+                                            <img src="{{ asset('images/picto/noBets.svg') }}" alt="noBets">
+                                        </div>
+                                        <div class="account_bet_noBets_info">
+                                            <p>Tu n'as pas de paris en cours. Tente ta chance avec le top des paris!</p>
+                                            {% include 'components/button/btn.html.twig' with { 'url': '/', 'label': 'Voir le top des paris', 'class': 'parisBtn mediumSize'}%}
+                                        </div>
+                                    </div>
+{#                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'win', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 2.00, 'odd' : 2.6} %}#}
+{#                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'lose', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 20.00, 'odd' : 3} %}#}
+{#                    {% include 'components/bets_card/bets_card.html.twig' with {'status': 'progress', 'label' : 'Est-ce que Laura va avoir son Mastère ?', 'answer' : 'Je pense que oui', 'amount' : 3.00, 'odd' : 8.6} %}#}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-    <p>Email : {{ user.email }}</p>
-    <p>Nom : {{ user.firstName }} {{ user.lastName }}</p>
-    <p>Betecoin : {{ user.betecoin }}</p>
-    <p>Âge : {{ user.age }}</p>
-    <img style="width: 140px;" src="{{ asset('pictures/' ~ user.picture) }}" alt="Image de profil">
+{#    <h2>Tous les paris</h2>#}
+{#     C'est juste tous les paris, actuellement#}
+{#    {% for bet in allBets %}#}
+{#        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>#}
+{#    {% else %}#}
+{#        <p>Il n'y a pas de paris actuellement.</p>#}
+{#    {% endfor %}#}
 
-    <h2>Tous les paris</h2>
-    {# C'est juste tous les paris, actuellement #}
-    {% for bet in allBets %}
-        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>
-    {% else %}
-        <p>Il n'y a pas de paris actuellement.</p>
-    {% endfor %}
-   
 
-    <h2>Mes paris</h2>
-     {% for bet in ownBets %}
-        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>
-    {% else %}
-        <p>Vous n'avez pas de paris actuellement.</p>
-    {% endfor %}
+{#    <h2>Mes paris</h2>#}
+{#     {% for bet in ownBets %}#}
+{#        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>#}
+{#    {% else %}#}
+{#        <p>Vous n'avez pas de paris actuellement.</p>#}
+{#    {% endfor %}#}
 
 {% endblock %}

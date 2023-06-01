@@ -1,0 +1,59 @@
+.bets_card{
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  &_status{
+    display: flex;
+    justify-content: space-between;
+    background-color: $backgroundColor;
+    border-top-left-radius: 1.6rem;
+    border-top-right-radius: 1.6rem;
+    padding: 1rem;
+    .status{
+      color: white;
+      border-radius: 0.8rem;
+      padding: .2rem 0.4rem;
+      font-size: 1.2rem;
+      &.win{
+        background-color: green;
+      }
+      &.lose{
+        background-color: red;
+      }
+      &.progress{
+        background-color: grey;
+      }
+    }
+  }
+  &_info{
+    background-color: $backgroundColor;
+    padding: 1rem;
+  }
+  &_stake{
+    background-color: $backgroundColor;
+    border-bottom-left-radius: 1.6rem;
+    border-bottom-right-radius: 1.6rem;
+    padding: 1rem;
+    &_bet{
+      display: flex;
+      justify-content: space-between;
+    }
+    &_gain{
+      display: flex;
+      justify-content: space-between;
+      &.win{
+        p{
+          color: green;
+          font-weight: 700;
+        }
+      }
+      &.lose{
+        p{
+          color: red;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

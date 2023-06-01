@@ -1,0 +1,30 @@
+<header class="header">
+    <div class="header_wrapper">
+        <div class="header_wrapper_logo">
+            <a href="/">
+                <img src="{{ asset('images/favicon.ico') }}" alt="">
+            </a>
+        </div>
+        <nav class="header_wrapper_nav">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <ul>
+                    <li>
+                        {% include 'components/button/btn.html.twig' with { 'url': '/account', 'label': 'Mon compte', 'class': 'navBtn smallSize'}%}
+                    </li>
+                    <li>
+                        {% include 'components/button/btn.html.twig' with { 'url': '/logout', 'label': 'Déconnexion', 'class': 'navBtn smallSize'}%}
+                    </li>
+                </ul>
+            {% else %}
+                <ul>
+                    <li>
+                        {% include 'components/button/btn.html.twig' with { 'url': '/login', 'label': 'Connexion', 'class': 'navBtn smallSize'}%}
+                    </li>
+                    <li>
+                        {% include 'components/button/btn.html.twig' with { 'url': '/register', 'label': 'Inscription', 'class': 'navBtn smallSize'}%}
+                    </li>
+                </ul>
+            {% endif %}
+        </nav>
+    </div>
+</header>

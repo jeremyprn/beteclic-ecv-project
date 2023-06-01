@@ -1,3 +1,8 @@
+$primary : #e10014;
+$primaryAlt: #96000d;
+$primaryAltHover: #ff4152;
+$backgroundColor : #EEF0F3;
+
 *,
 ::before,
 ::after {
@@ -6,10 +11,37 @@
   box-sizing: border-box;
 }
 
+html{
+  font-size: 10px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: $backgroundColor;
+  color: #272a30;
 }
 
 h1 {
   color: red;
+}
+h2{
+  display: block;
+  padding: 0;
+  margin-bottom: 1.2rem;
+  color: #272a30;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+p{
+  font-size: 1.4rem;
+}
+ul{
+  list-style-type: none;
+}
+
+.ui-wrapper{
+  padding: 4rem;
+  border-radius: 1.6rem;
+  background-color: white;
 }
