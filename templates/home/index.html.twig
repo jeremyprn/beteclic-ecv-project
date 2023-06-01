@@ -15,11 +15,11 @@
                         <p class="card-text">{{ event.getDescription() }}</p>
 
                         {% for selectionEvent in event.getSelectionEvents() %}
-                            <div>
+                            <a href="">
                                 <span>{{ selectionEvent.getLabel() }}</span>
                                 <span>{{ selectionEvent.getOdd() }}</span>
                                 {# <a href="{{ path('path_to_your_form', {'eventId': event.getId(), 'selectionEventId': selectionEvent.getId()}) }}">Parier</a> #}
-                            </div>
+                            </a>
                         {% endfor %}
 
                         <a href="#" class="btn btn-primary">Voir plus</a>

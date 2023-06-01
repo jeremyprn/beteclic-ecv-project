@@ -13,10 +13,6 @@ class BetType extends AbstractType
     {
         $builder
             ->add('amount')
-            ->add('odd')
-            ->add('potentialGain')
-            ->add('userId')
-            ->add('selectionEventId')
         ;
     }
 
