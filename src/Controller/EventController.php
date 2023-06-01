@@ -13,13 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/event')]
 class EventController extends AbstractController
 {
-    #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
-    {
-        return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
-        ]);
-    }
+//    #[Route('/', name: 'app_event_index', methods: ['GET'])]
+//    public function index(EventRepository $eventRepository): Response
+//    {
+//        return $this->render('event/index.html.twig', [
+//            'events' => $eventRepository->findAll(),
+//        ]);
+//    }
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventRepository $eventRepository): Response
@@ -31,7 +31,7 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
 
-            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('beteclic_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('event/new.html.twig', [
