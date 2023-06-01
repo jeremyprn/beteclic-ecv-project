@@ -2,4 +2,12 @@
   background-color: black;
   display: flex;
   justify-content: center;
+
+  a {
+    text-align: center;
+
+    img {
+      max-width: 90%;
+    }
+  }
 }

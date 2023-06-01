@@ -5,7 +5,29 @@
 {% block body %}
 <div class="layout">
     <aside>
-        <div class="content"></div>
+        <div class="content">
+            <h3 class="title_categorie">Catégories</h3>
+            <ul class="categories">
+                <li>
+                    <a href="#">Catégorie 1</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 2</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 3</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 4</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 5</a>
+                </li>
+                <li>
+                    <a href="#">Catégorie 6</a>
+                </li>
+            </ul>
+        </div>
     </aside>
     <main>
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
