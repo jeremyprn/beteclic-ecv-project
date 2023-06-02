@@ -23,7 +23,6 @@ class BetController extends AbstractController
         $user = $this->getUser();
 
         if (!$user) {
-            $this->addFlash('danger', 'Vous devez être connecté pour pouvoir parier.');
             return $this->redirectToRoute('app_login');
         }
 
