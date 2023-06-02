@@ -21,7 +21,7 @@ class HomeController extends AbstractController
 
         $events = $entityManager
             ->getRepository(Event::class)
-            ->findAll();
+            ->findBy(['isOpen' => 1]);
 
         $user = $this->getUser();
 

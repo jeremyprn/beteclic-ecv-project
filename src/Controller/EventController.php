@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Bet;
 use App\Entity\Event;
+use App\Entity\SelectionEvent;
+use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,15 +26,44 @@ class EventController extends AbstractController
 //    }
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EventRepository $eventRepository): Response
+    public function new(Request $request, EventRepository $eventRepository, EntityManagerInterface $entityManager): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
         $user = $this->getUser();
 
+        $event->setUserId($user);
+        $event->setIsOpen(1);
+
+
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
+
+
+            $firstSelectEvent = new SelectionEvent();
+            $secondSelectEvent = new SelectionEvent();
+
+            $firstChoice = $form->get('firstChoice')->getData();
+            $firstOdd = $form->get('firstOdd')->getData();
+            $secondChoice = $form->get('secondChoice')->getData();
+            $secondOdd = $form->get('secondOdd')->getData();
+
+
+            $firstSelectEvent->setLabel($firstChoice);
+            $firstSelectEvent->setOdd($firstOdd);
+            $firstSelectEvent->setEventId($event);
+
+            $secondSelectEvent->setLabel($secondChoice);
+            $secondSelectEvent->setOdd($secondOdd);
+            $secondSelectEvent->setEventId($event);
+
+            $entityManager->persist($firstSelectEvent);
+            $entityManager->persist($secondSelectEvent);
+            $entityManager->flush();
 
             return $this->redirectToRoute('beteclic_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -55,16 +88,18 @@ class EventController extends AbstractController
     {
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
 
-            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('beteclic_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('event/edit.html.twig', [
             'event' => $event,
             'form' => $form,
+            'user' => $user,
         ]);
     }
 
@@ -75,6 +110,33 @@ class EventController extends AbstractController
             $eventRepository->remove($event, true);
         }
 
-        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('beteclic_home', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{id}/validate/{idAnswer}', name: 'app_event_validate', methods: ['GET'])]
+    public function validate(Request $request, Event $event,  int $idAnswer, EntityManagerInterface $entityManager): Response
+    {
+
+        $event->setIsOpen(0);
+        $idSelectionEvent = $entityManager->getRepository(SelectionEvent::class)->find($idAnswer);
+        $event->setSelectionEventId($idSelectionEvent);
+
+
+        $bets = $entityManager->getRepository(Bet::class)->findBy(['selectionEventId' => $idSelectionEvent]);
+        foreach ($bets as $bet){
+            $userId = $bet->getUserId()->getId();
+            $userBeteCoin = $bet->getUserId()->getBeteCoin();
+
+            $winnerUser = $entityManager->getRepository(User::class)->findBy(['id' => $userId]);
+            $winnerUser[0]->setBeteCoin($userBeteCoin + $bet->getPotentialGain());
+            $entityManager->persist($winnerUser[0]);
+        }
+
+        $entityManager->persist($event);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('beteclic_home', [], Response::HTTP_SEE_OTHER);
+    }
+
 }
