@@ -28,7 +28,7 @@
         {% endif %}
         <section id="last_bets">
             {% if events|length > 0 %}
-                <h2 class="title_section">Les deux derniers bets</h2>
+                <h2 class="title_section">Les deux derniers bêêêeetes</h2>
                 {% for event in events|slice(-2) %}
                     <article class="bet_card">
                         <div class="bet_card-infos">
@@ -51,8 +51,8 @@
         </section>
         {% if events|length > 3 %}
             <section id="bets_available">
-                <h2 class="title_section">Les bets actifs</h2>
-                    {% for event in events|slice(0, -2) %}
+                <h2 class="title_section">Les bêêêeetes actifs</h2>
+                    {% for bet in events|slice(-2) %}
                     <article class="bet_card">
                         <div class="bet_card-infos">
                             <h3>{{ event.getTitle() }}</h3>
