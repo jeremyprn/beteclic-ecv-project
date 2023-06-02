@@ -113,7 +113,7 @@ class EventController extends AbstractController
         return $this->redirectToRoute('beteclic_home', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/validate/{idAnswer}', name: 'app_event_validate', methods: ['GET'])]
+    #[Route('/{id}/validate/{idAnswer}', name: 'app_event_validate', methods: ['GET'], requirements: ['id' => '\d+', 'idAnswer' => '\d+'])]
     public function validate(Request $request, Event $event,  int $idAnswer, EntityManagerInterface $entityManager): Response
     {
 
