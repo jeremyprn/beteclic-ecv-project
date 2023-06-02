@@ -1,8 +1,8 @@
 .header{
   position: sticky;
   top: 0;
-  
   background-color: $primary;
+  z-index: 99;
   &_wrapper{
     padding: 0 2.4rem;
     height: 5.2rem;
