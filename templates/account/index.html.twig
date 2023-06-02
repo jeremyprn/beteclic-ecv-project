@@ -57,22 +57,18 @@
                 {% endfor %}
             </div>
         </div>
+        {% if ownEvents|length > 0 %}
+            <div class="ui-wrapper account_bet">
+                <h2>Mes paris créé</h2>
+                <div class="account_bet_container">
+                    {% for event in ownEvents %}
+                        {% if event.isOpen == true %}
+                            {% include 'components/events_card/event_card.html.twig' with { 'event' : event }%}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-
-{#    <h2>Tous les paris</h2>#}
-{#     C'est juste tous les paris, actuellement#}
-{#    {% for bet in allBets %}#}
-{#        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>#}
-{#    {% else %}#}
-{#        <p>Il n'y a pas de paris actuellement.</p>#}
-{#    {% endfor %}#}
-
-
-{#    <h2>Mes paris</h2>#}
-{#     {% for bet in ownBets %}#}
-{#        <p>{{ bet.selectionEventId.eventId.title }} - {{ bet.selectionEventId.label }}</p>#}
-{#    {% else %}#}
-{#        <p>Vous n'avez pas de paris actuellement.</p>#}
-{#    {% endfor %}#}
 
 {% endblock %}

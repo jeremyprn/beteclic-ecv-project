@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,14 +33,20 @@ class AccountController extends AbstractController
         ->getRepository(Bet::class)
         ->findAll();
 
+
         $ownBets = $this->entityManager
         ->getRepository(Bet::class)
         ->findBy(['userId' => $user->getId()]);
 
+        $ownEvents = $this->entityManager
+            ->getRepository(Event::class)
+            ->findBy(['userId' => $user->getId(), 'isOpen' => true]);
+
         return $this->render('account/index.html.twig', [
             'user' => $user,
             'allBets' => $allBets,
-            'ownBets' => $ownBets
+            'ownBets' => $ownBets,
+            'ownEvents' => $ownEvents
         ]);
     }
 }
