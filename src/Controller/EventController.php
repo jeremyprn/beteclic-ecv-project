@@ -116,6 +116,11 @@ class EventController extends AbstractController
     #[Route('/{id}/validate/{idAnswer}', name: 'app_event_validate', methods: ['GET'], requirements: ['id' => '\d+', 'idAnswer' => '\d+'])]
     public function validate(Request $request, Event $event,  int $idAnswer, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        if ($user->getId() != $event->getUserId()->getId()) {
+            return $this->redirectToRoute('beteclic_home');
+        } 
 
         $event->setIsOpen(0);
         $idSelectionEvent = $entityManager->getRepository(SelectionEvent::class)->find($idAnswer);
